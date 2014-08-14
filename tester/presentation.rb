@@ -17,42 +17,34 @@ class Presentation
     wait.until { chapter.displayed? && chapter.enabled? && chapter.location.x > 0}
     chapter.click
     sleep(1)
-
     switch_to_current_frame
   end
 
   #TODO: add 'like' parameter
   def next_slide
     switch_to_current_frame
-
     body = $driver.find_element(:tag_name => "body")
-
     $driver.mouse.move_to(body, 3*body.size.width/4, body.size.height/4)
     $driver.mouse.down
     $driver.mouse.move_by(-body.size.width/2, 0)
     $driver.mouse.up
     sleep(1)
-
     switch_to_current_frame
   end
 
   def previous_slide
     switch_to_current_frame
-
     body = $driver.find_element(:tag_name => "body")
-
     $driver.mouse.move_to(body, body.size.width/4, body.size.height/4)
     $driver.mouse.down
     $driver.mouse.move_by(body.size.width/2, 0)
     $driver.mouse.up
     sleep(1)
-
     switch_to_current_frame
   end
 
   def set_slider(value)
     switch_to_current_frame
-
     slider = $driver.find_element(:xpath => "//div[@class='slider' and @rv-slider]/div[@class='slider-handler']")
     scale_max = $driver.find_element(:xpath => "//*[contains(@class,'scale') and not(preceding-sibling::\
                                                 *[contains(@class,'pie-slider')]) and not(following-sibling::\
@@ -60,15 +52,13 @@ class Presentation
     scale_length = $driver.find_element(:xpath => "//div[@class='slider' and @rv-slider]").size.width
     slider_size = slider.size.width
     offset = value * (scale_length - slider_size) / scale_max
-
     $driver.action.drag_and_drop_by(slider, offset, 0).perform
-
     sleep(1)
   end
 
   def set_pie_slider(value)
     switch_to_current_frame
-
+    
     pie_slider = $driver.find_element(:class => "pie-slider")
     pie_slider_max = pie_slider.attribute("max").to_i
 
@@ -98,8 +88,8 @@ class Presentation
       abs_offset_x = calc_radius * Math::sin(a_rad)
       abs_offset_y = calc_radius * (1 - Math::cos(a_rad))
 
-      offset_x = (abs_offset_x - prev_x) #< 0 ? (abs_offset_x - prev_x).floor : (abs_offset_x - prev_x).ceil
-      offset_y = (abs_offset_y - prev_y) #< 0 ? (abs_offset_y - prev_y).floor : (abs_offset_y - prev_y).ceil
+      offset_x = (abs_offset_x - prev_x)
+      offset_y = (abs_offset_y - prev_y)
 
       prev_x = abs_offset_x
       prev_y = abs_offset_y
@@ -108,7 +98,6 @@ class Presentation
     end
 
     $driver.action.release.perform
-
     sleep(1)
   end
 
