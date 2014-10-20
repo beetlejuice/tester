@@ -1,5 +1,5 @@
 require 'selenium-webdriver'
-require_relative 'tester/presentation'
+require_relative 'lib/presentation'
 
 $driver = Selenium::WebDriver.for :chrome,
                                   :switches => %w[--ignore-certificate-errors
